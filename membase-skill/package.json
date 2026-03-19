@@ -1,0 +1,65 @@
+{
+	"name": "@unibase/openclaw-plugin-membase",
+	"version": "1.0.0",
+	"description": "Membase backup skills for AI agents (AgentSkills standard) + OpenClaw Extension",
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"bin": {
+		"membase": "skills/membase/membase.ts"
+	},
+	"files": [
+		"dist",
+		"skills",
+		"README.md",
+		"LICENSE"
+	],
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./skills/*": "./skills/*",
+		"./lib/*": "./dist/lib/*"
+	},
+	"scripts": {
+		"build": "tsc && npm run link-lib",
+		"link-lib": "cd skills/membase && rm -f lib && ln -sf ../../dist/lib lib",
+		"dev": "tsc --watch",
+		"prepublishOnly": "npm run build"
+	},
+	"keywords": [
+		"agentskills",
+		"openclaw",
+		"openclaw-plugin",
+		"claude",
+		"plugin",
+		"memory",
+		"backup",
+		"membase",
+		"encryption",
+		"decentralized"
+	],
+	"author": "Unibase",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/unibaseio/openclaw-plugin-membase.git"
+	},
+	"homepage": "https://github.com/unibaseio/openclaw-plugin-membase#readme",
+	"bugs": {
+		"url": "https://github.com/unibaseio/openclaw-plugin-membase/issues"
+	},
+	"peerDependencies": {
+		"openclaw": ">=2025.1.0"
+	},
+	"dependencies": {
+		"@inquirer/prompts": "^7.2.0",
+		"commander": "^12.1.0",
+		"fast-glob": "^3.3.2"
+	},
+	"devDependencies": {
+		"@types/node": "^22.0.0",
+		"typescript": "^5.7.2"
+	}
+}
