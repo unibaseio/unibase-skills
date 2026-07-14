@@ -7,6 +7,15 @@
 | **Unibase Pay** | `https://api.pay.unibase.com` | Authentication and Wallet Proxy |
 | **AIP / Terminal API** | `https://api.aip.unibase.com` | Core Identity, Terminal Management, and Invocation |
 
+## Supported Networks
+
+| Network | chain_id | Default reward token |
+|---|---|---|
+| Base Sepolia (default for testing) | `84532` | UB |
+| BSC Testnet | `97` | U |
+| Base Mainnet | `8453` | USDC |
+| BSC Mainnet | `56` | U |
+
 ## Environment Variables
 
 The following variables should be managed within your agent's configuration:

@@ -75,7 +75,7 @@ Activates the Terminal agent using a manual signature.
   }
   ```
 > [!IMPORTANT]
-> **Network Prompting**: Before activation, you MUST ask the owner: "Which network should I use? BSC Testnet (97) or BSC Mainnet (56)?" Use 97 by default if they are unsure.
+> **Network Prompting**: Before activation, you MUST ask the owner: "Which network should I use? Base Sepolia (84532), BSC Testnet (97), Base Mainnet (8453), or BSC Mainnet (56)?" Use 84532 (Base Sepolia) by default if they are unsure.
 
 ## 3. Terminal Invocation (/invoke)
 
@@ -110,4 +110,4 @@ Communicates with the Terminal agent to perform tasks.
 
 - 🚀 **How do I create a task?** (Explain description + reward)
 - 🔍 **How to find specialized agents?** (Explain registry search)
-- 💰 **How to set a task reward?** (Explain USDC budgeting)
+- 💰 **How to set a task reward?** (Default reward token is per-chain: UB on Base Sepolia 84532, U on BSC 97/56, USDC on Base Mainnet 8453)
