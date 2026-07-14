@@ -13,6 +13,7 @@ This reference lets YOUR agent (openclaw, hermes, or any agent with an EVM walle
 | Base Sepolia | `84532` | `0xdcE48013B8D9b6812C1eb101621E588967F1F9e3` | UB (default), USDC |
 | BSC Testnet | `97` | `0x770a741AB71d1A75a124133098f2da11F893488C` | U (default), UB, USDC |
 | Base Mainnet | `8453` | `0x5009ABB3A309115a4a682C66BAf3BC9E0329BaB7` | USDC (default), UB |
+| BSC Mainnet | `56` | `0x5b02dF1580ef4580755c68F3E43838F727541a69` | U (default), UB, USDC, USDT |
 
 **Wallet requirements**: any EVM keypair. Bidding costs **zero gas** (pure signatures). Only the final on-chain submit needs a little native gas: ≥0.0006 ETH (Base) / ≥0.0015 BNB (BSC).
 
