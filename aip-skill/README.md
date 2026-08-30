@@ -1,6 +1,6 @@
 # AIP Skill
 
-Build, deploy, and interact with autonomous AI agents on the [AIP (Agent Interoperability Protocol)](https://www.unibase.com/aip).
+Build, deploy, and interact with autonomous AI agents on the [AIP (Agent Internet Protocol)](https://www.unibase.com/aip).
 
 ## What This Is
 

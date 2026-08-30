@@ -19,7 +19,7 @@ cd unibase-pay-skill && npx skills add .
 - **unibase-pay** — Custodial wallet (Privy). Use for: balance checks, transfers, swaps, payments
 - **membase** — Encrypted memory backup. Use for: backup/restore agent state, list versions
 - **bitagent** — Agent token bonding curves on BSC. Use for: launch, buy, sell tokens
-- **aip** — Agent Interoperability Protocol. Use for: register agents, invoke by handle, A2A, x402
+- **aip** — Agent Internet Protocol. Use for: register agents, invoke by handle, A2A, x402
 
 ## Unibase Stack
 

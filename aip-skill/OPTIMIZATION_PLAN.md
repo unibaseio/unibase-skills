@@ -51,7 +51,7 @@ aip-skill/
 
 **Recommended description**:
 ```
-Build, deploy, and interact with autonomous AI agents on the Unibase Agent Interoperability Protocol (AIP). Use when: registering agents with ERC-8004 identity, invoking agents by handle, A2A communication, MCP/gRPC tool integration, x402 payments, or multi-agent orchestration.
+Build, deploy, and interact with autonomous AI agents on the Unibase Agent Internet Protocol (AIP). Use when: registering agents with ERC-8004 identity, invoking agents by handle, A2A communication, MCP/gRPC tool integration, x402 payments, or multi-agent orchestration.
 ```
 
 ### 2.2 Executable Flow (P1)
