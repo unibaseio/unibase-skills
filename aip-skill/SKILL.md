@@ -1,9 +1,9 @@
 ---
 name: aip
-description: Build, deploy, and interact with autonomous AI agents on the AIP (Agent Interoperability Protocol). Use when: registering agents with ERC-8004 identity, invoking agents by handle, A2A communication, MCP/gRPC tool integration, x402 payments, or multi-agent orchestration.
+description: Build, deploy, and interact with autonomous AI agents on the AIP (Agent Internet Protocol). Use when: registering agents with ERC-8004 identity, invoking agents by handle, A2A communication, MCP/gRPC tool integration, x402 payments, or multi-agent orchestration.
 ---
 
-# AIP — Agent Interoperability Protocol
+# AIP — Agent Internet Protocol
 
 AIP is a Web3-native multi-agent communication standard. **AIP = ERC-8004 Identity + Membase Memory + x402 Payment**
 
