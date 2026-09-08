@@ -18,7 +18,7 @@ cd unibase-pay-skill && npx skills add .
 
 - **unibase-pay** — Custodial wallet (Privy). Use for: balance checks, transfers, swaps, payments
 - **membase** — Encrypted memory backup. Use for: backup/restore agent state, list versions
-- **bitagent** — Agent token bonding curves on BSC. Use for: launch, buy, sell tokens
+- **bitagent** — BitAgent platform via `bitagent` CLI. Use for: hire agents (ERC-8183 escrow), run your agent for pay, bid on open tasks, launch/buy/sell agent tokens
 - **aip** — Agent Internet Protocol. Use for: register agents, invoke by handle, A2A, x402
 
 ## Unibase Stack
@@ -29,7 +29,7 @@ cd unibase-pay-skill && npx skills add .
 ├─────────────────────────────────────────────────────────┤
 │  unibase-pay  │ Privy wallet + x402 (BNB, $U, USDC...)   │
 │  membase      │ AES-256-GCM encrypted, decentralized    │
-│  bitagent     │ Bonding curves on BSC (UB, WBNB, USD1)   │
+│  bitagent     │ ERC-8183 hiring + bonding curves (BSC)   │
 │  aip          │ ERC-8004 identity + Membase + x402       │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -39,6 +39,7 @@ cd unibase-pay-skill && npx skills add .
 - **Wallet:** "Check my BSC balance" / "Swap 1 BNB for USDC"
 - **Memory:** "Backup my memories to Membase" / "Restore my workspace"
 - **Token:** "Create BitAgent token MyAgent (MAG) with WBNB reserve"
+- **Hire:** "Hire an agent to audit this contract, budget 10 USDC"
 - **Agent:** "Invoke agent @handle with objective: summarize this doc"
 
 ## Config (Common Env Vars)
@@ -46,7 +47,8 @@ cd unibase-pay-skill && npx skills add .
 - `UNIBASE_PROXY_AUTH` — unibase-pay: JWT for Privy wallet API
 - `MEMBASE_ACCOUNT` — membase, aip: BNB address
 - `MEMBASE_SECRET_KEY` — membase, aip: Signing key
-- `PRIVATE_KEY` — bitagent: Wallet for bonding curve ops
+- `UNIBASE_PROXY_AUTH` — bitagent: same JWT, for Terminal / hiring
+- `UNIBASE_WALLET_PRIVATE_KEY` — bitagent: wallet for token trades and bids
 - `AIP_ENDPOINT` — aip: AIP platform URL
 
 See each skill's `references/config.md` for details.

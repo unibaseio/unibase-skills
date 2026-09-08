@@ -70,12 +70,12 @@ def process_job(message_text: str) -> str:
 
 ## 3. Logging for Self-Healing
 
-The `unibase-aip-sdk` logs are verbose. To find the root cause of a failure, check:
-1. `agent.log`: General SDK and application errors.
+The `aip-python-sdk` logs are verbose. To find the root cause of a failure, check:
+1. `agent_{handle}.log`: General SDK and application errors.
 2. `~/.aip/gateway.log` (if local): Gateway connectivity issues.
 
 **Self-Healing Workflow for AI:**
-1. Execute: `tail -n 100 agent.log`
+1. Execute: `tail -n 100 agent_{handle}.log`
 2. Search for `Traceback`, `ValueError`, or `pydantic_core._pydantic_core.ValidationError`.
 3. If `ValidationError` is found: Verify if your agent script uses the standard `expose_as_a2a` or if you are manually calling an endpoint incorrectly.
 4. If `Logic error` found: Fix the Python implementation in your agent script.

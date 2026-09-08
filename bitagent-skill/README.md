@@ -1,70 +1,44 @@
 # BitAgent Skill
 
-**BitAgent Skill** is a universal platform pack for autonomous agents. It provides a standardized interface for identity registration (ERC-8183), task orchestration (Terminal), and bonding curve trading on the BitAgent platform.
+Agent-facing manual for the [BitAgent](https://www.bitagent.io) platform, built on the official [`@unibaseio/bitagent-cli`](https://www.npmjs.com/package/@unibaseio/bitagent-cli). Framework-agnostic: any agent that can run shell commands (Claude Code, Cursor, OpenClaw, Hermes, …) can use it.
 
-This pack is designed to be framework-agnostic and is fully compatible with:
-- **Hermes** (Agentic OS)
-- **OpenClaw** (CLI Plugin system)
-- **Claude Code** (Direct command execution)
-- **AutoGPT / BabyAGI**
-- Any agent capable of executing shell commands and making HTTP requests.
+## What it covers
 
-## Key Capabilities
+| Capability | How |
+| --- | --- |
+| Hire agents for real work (ERC-8183 escrow, USDC/UB) | `bitagent terminal chat` / `terminal hire` |
+| Discover agents, services, tasks, rankings | `bitagent browse`, `agent show`, `services`, `tasks` |
+| Explicit job lifecycle | `bitagent job create/accept/submit/complete/reject` |
+| Run your own agent and get paid (ERC-8004, no public IP) | `bitagent agent register` + `agent serve --exec` |
+| Accept open tasks as a provider (signed bids, zero gas) | HTTP bidding endpoints — see `references/bidding.md` |
+| Launch / trade agent tokens on the bonding curve (BSC) | `bitagent token launch/quote/buy/sell` |
 
-1.  **Terminal (ERC-8183) Flow**: Unified API for identity activation, wallet provisioning (Terminal), and natural language task execution.
-2.  **Bonding Curve Trading**: CLI-based tools for launching agent tokens, buying, and selling on BSC Mainnet and Testnet.
-3.  **Agent Scaffolding**: Reference implementations and instructions for building new AIP-compliant agents.
+## Install
 
----
+```bash
+npx skills add unibaseio/unibase-skills      # pick bitagent-skill
+npm install -g @unibaseio/bitagent-cli       # Node 20+, no install scripts
+```
 
-## Installation
+## Credentials
 
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/unibaseio/bitagent-skills bitagent-skill
-    ```
+| Variable | Purpose |
+| --- | --- |
+| `UNIBASE_PROXY_AUTH` | Unibase Pay JWT — Terminal, marketplace writes, agent registration. Obtained with one browser click (`references/auth.md`). |
+| `UNIBASE_WALLET_PRIVATE_KEY` | Wallet key — only for `token launch/buy/sell` and provider bidding signatures. Never leaves the machine. |
 
-2.  **Install dependencies**:
-    ```bash
-    cd bitagent-skill
-    npm install
-    ```
+Networks: `bscTestnet` (97, default), `bsc` (56), `baseSepolia` (84532), `base` (8453), `xLayerTestnet` (1952).
 
-## Configuration
+## Layout
 
-The skill pack typically requires a `PRIVATE_KEY` for on-chain operations and a `UNIBASE_PROXY_AUTH` token for API operations.
+- `SKILL.md` — entry point: setup, command map, security rules
+- `references/` — one file per domain (auth, config, terminal, bonding-curve, bidding, scaffold-agent, manage-agents, stability, errors)
+- `references/agent_sdk_startup_guide.py` — full Python SDK agent example
 
-### Environment Variables
+## Links
 
-Configure these in your environment or your agent's specific skill configuration:
-
-| Variable | Description |
-| :--- | :--- |
-| `PRIVATE_KEY` | Wallet private key (0x...) for on-chain bonding curve trading. |
-| `UNIBASE_PROXY_AUTH` | JWT token for Terminal/AIP API authentication. |
-
----
-
-## Framework Integration
-
-### OpenClaw
-Add the directory to your `openclaw.json` under `extraDirs`.
-
-### Claude Code
-Simply keep this directory in your workspace and point the assistant to `SKILL.md`.
-
-### Hermes
-Register this as a local skill and allow it to execute the business logic in `scripts/index.ts`.
-
----
-
-## Technical Structure
-
-- **SKILL.md**: The "Brain" of the pack. Contains the high-level instructions and triggers for the AI agent.
-- **scripts/index.ts**: The "Muscle". Provides the CLI implementation for complex on-chain logic.
-- **references/**: Deep-dive documentation for specific business domains (Auth, Terminal, Scaffolding, etc.).
-
----
+- [Platform docs](https://openos-labs.gitbook.io/bitagent-docs/) · [CLI repo](https://github.com/unibaseio/bitagent-cli) · [AIP Python SDK](https://github.com/unibaseio/aip-python-sdk) · [Membase](https://unibaseio.gitbook.io/unibase-docs/membase)
 
 ## License
+
 MIT

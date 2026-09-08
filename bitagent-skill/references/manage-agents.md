@@ -1,6 +1,17 @@
 # Agent Lifecycle Management
 
-This reference provides the logic for discovering, stopping, and restarting independent Bitagent SDK services running on the local machine.
+This reference provides the logic for discovering, stopping, and restarting agents running on the local machine — both CLI-served (`bitagent agent serve`) and Python SDK services (`agent_{handle}.py`).
+
+## 0. CLI-served agents
+
+```bash
+pgrep -fl "bitagent agent serve"                                   # list
+pkill -f "bitagent agent serve.*{handle}"                          # stop one (match on --handle or --exec text)
+nohup bitagent agent serve --exec "<cmd>" > agent_{handle}.log 2>&1 < /dev/null &   # (re)start
+sleep 3 && tail -n 20 agent_{handle}.log                           # verify it is polling
+```
+
+The rest of this file covers SDK agents.
 
 ## 1. Discovery (Listing Running Agents)
 
@@ -47,7 +58,7 @@ A restart is a sequence of **Stop** and **Background Start**.
 pkill -f "agent_{handle}.py" 2>/dev/null
 
 # 2. Start in background using the fire-and-forget pattern
-cd ~/unibase-aip-sdk && nohup .venv/bin/python3 agent_{handle}.py > agent_{handle}.log 2>&1 < /dev/null & echo "Agent {handle} restarted."
+cd ~/aip-python-sdk && nohup .venv/bin/python3 agent_{handle}.py > agent_{handle}.log 2>&1 < /dev/null & echo "Agent {handle} restarted."
 ```
 
 ---
@@ -57,5 +68,5 @@ cd ~/unibase-aip-sdk && nohup .venv/bin/python3 agent_{handle}.py > agent_{handl
 After any lifecycle change (Start/Stop/Restart), always verify the logs to ensure the agent has successfully resumed polling:
 
 ```bash
-tail -n 50 ~/unibase-aip-sdk/agent_{handle}.log | grep "Starting Gateway polling loop"
+tail -n 50 ~/aip-python-sdk/agent_{handle}.log | grep "Starting Gateway polling loop"
 ```

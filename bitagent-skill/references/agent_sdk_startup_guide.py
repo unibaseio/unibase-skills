@@ -44,28 +44,30 @@ Binance API docs:
     │         │                                                       │
     │         ├── endpoint_url is set →  PUSH mode (Gateway calls)     │
     │         └── endpoint_url=None  →  POLLING mode (Agent polls)     │
-    │              + via_gateway=True  → Terminal discovers via gateway  │
+    │              + via_gateway=True  → Butler discovers via gateway  │
     │                                                                 │
     └─────────────────────────────────────────────────────────────────┘
 
 =============================================================================
-2. Terminal Agent + Job Queue (NEW)
+2. Butler Agent + Job Queue (NEW)
 =============================================================================
 
-    User → Terminal → search_job_offerings() → Gateway → Agent (your service)
+Agents registered via SDK can be discovered and called by Butler via the Gateway:
 
-Terminal discovers agents via job_offerings vector search. When an agent is hired:
-  - If agent has endpoint_url (PUSH) → Terminal calls directly
-  - If agent has via_gateway=True → Terminal routes via Gateway job queue:
+    User → Butler → search_job_offerings() → Gateway → Agent (your service)
+
+Butler discovers agents via job_offerings vector search. When an agent is hired:
+  - If agent has endpoint_url (PUSH) → Butler calls directly
+  - If agent has via_gateway=True → Butler routes via Gateway job queue:
       GET  /gateway/jobs/poll     (agent polls, every 3s)
       POST /gateway/jobs/complete (agent submits result)
 
-Key: set via_gateway=True when endpoint_url=None and you want Terminal to call you!
+Key: set via_gateway=True when endpoint_url=None and you want Butler to call you!
 
     expose_as_a2a(
         endpoint_url=None,          # Private agent (no public URL)
-        via_gateway=True,           # KEY: Terminal can discover and route via gateway
-        job_offerings=[...],         # REQUIRED: so Terminal finds you in search
+        via_gateway=True,           # KEY: Butler can discover and route via gateway
+        job_offerings=[...],         # REQUIRED: so Butler finds you in search
         ...
     )
 
@@ -227,16 +229,6 @@ def extract_wallet_from_token(token: str) -> str | None:
         return sub if sub else None
     except Exception:
         return None
-
-
-def find_available_port(start_port: int, max_attempts: int = 50) -> int:
-    """Check sequential ports until an available one is found."""
-    import socket
-    for port in range(start_port, start_port + max_attempts):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            if s.connect_ex(('0.0.0.0', port)) != 0:
-                return port
-    return start_port
 
 
 async def interactive_auth() -> tuple[str, str]:
@@ -685,7 +677,7 @@ def build_server(
         print(f"  URL:      {endpoint_url}")
     if polling:
         if via_gateway:
-            print(f"  Queue:    JOB-QUEUE (/gateway/jobs/poll) - Terminal can discover this agent")
+            print(f"  Queue:    JOB-QUEUE (/gateway/jobs/poll) - Butler can discover this agent")
         else:
             print(f"  Queue:    TASK-QUEUE (/gateway/tasks/poll)")
     print(f"  Port:     {port}")
@@ -760,9 +752,6 @@ def example_auto_register():
     agent = BinancePriceAgent()
     endpoint_url = public_url
 
-    # Resolve port dynamically
-    resolved_port = find_available_port(8200)
-
     print(f"\n{'='*70}")
     print("Step 3: Start Agent Service")
     print(f"{'='*70}")
@@ -770,7 +759,7 @@ def example_auto_register():
     server = expose_as_a2a(
         name=name,
         handler=agent.handle,
-        port=resolved_port,
+        port=8200,
         host="0.0.0.0",
         description=description,
         user_id=wallet if wallet else None,
@@ -842,13 +831,10 @@ def example_manual_register():
             name=name,
             description=description,
             endpoint_url=endpoint_url,
-            port=find_available_port(8201),
+            port=8201,
             existing_agent_id=existing_agent_id,
         )
     )
-
-    # Resolve port
-    resolved_port = find_available_port(8201)
 
     server = build_server(
         wallet=wallet,
@@ -857,7 +843,7 @@ def example_manual_register():
         name=name,
         description=description,
         endpoint_url=endpoint_url,
-        port=resolved_port,
+        port=8201,
         polling=False,
     )
     server.run_sync()
@@ -894,13 +880,10 @@ def example_polling_mode():
     print("Step 3: Start Agent Service (POLLING)")
     print(f"{'='*70}")
 
-    # Resolve port
-    resolved_port = find_available_port(8202)
-
     server = expose_as_a2a(
         name=name,
         handler=agent.handle,
-        port=resolved_port,
+        port=8202,
         host="0.0.0.0",
         description=description,
         user_id=wallet if wallet else None,
@@ -910,7 +893,7 @@ def example_polling_mode():
         handle=handle,
         auto_register=True,
         endpoint_url=None,
-        via_gateway=True,            # KEY: Terminal can discover & route via gateway job queue
+        via_gateway=True,            # KEY: Butler can discover & route via gateway job queue
         cost_model=CostModel(base_call_fee=0.0),
         chain_id=97,
         skills=[
@@ -927,7 +910,7 @@ def example_polling_mode():
     )
 
     print(f"  Mode:     POLLING (no public URL)")
-    print(f"  Queue:    JOB-QUEUE (/gateway/jobs/poll) - Terminal can discover this agent")
+    print(f"  Queue:    JOB-QUEUE (/gateway/jobs/poll) - Butler can discover this agent")
     print(f"  Register: POST https://api.aip.unibase.com/agents/register")
     print()
     print("  Chain:")
@@ -964,12 +947,9 @@ def example_polling_manual():
             name=name,
             description=description,
             endpoint_url=None,
-            port=find_available_port(8203),
+            port=8203,
         )
     )
-
-    # Resolve port
-    resolved_port = find_available_port(8203)
 
     server = build_server(
         wallet=wallet,
@@ -978,7 +958,7 @@ def example_polling_manual():
         name=name,
         description=description,
         endpoint_url=None,
-        port=resolved_port,
+        port=8203,
         polling=True,
         via_gateway=True,
     )

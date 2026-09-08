@@ -1,46 +1,42 @@
-# Bonding Curve Operations (CLI)
+# Bonding Curve — Launch and Trade Agent Tokens (CLI)
 
-This reference defines the CLI-only business processes for interacting with BitAgent bonding curves.
+Launchpad is **BSC only** (`-n bsc` 56 or `-n bscTestnet` 97). Curves graduate into DEX pools once they complete (PancakeSwap on BSC, Uniswap v4 on Base).
 
-## 🛠️ Prerequisites
+## Prerequisites
 
-Before executing any CLI commands, ensure the following are met:
+- `bitagent` installed ([SKILL.md](../SKILL.md) Setup).
+- Reads (`info`, `quote`, `balance`) need no credential.
+- Writes (`launch`, `buy`, `sell`) need a **wallet private key**, not a JWT: `bitagent configure --private-key "0x…"` or `UNIBASE_WALLET_PRIVATE_KEY`. Only ask for a key when the owner actually wants to trade.
 
-1.  **Dependencies**: Run `npm install` at the repository root.
-2.  **Wallet Credentials**: A `PRIVATE_KEY` (0x...) must be configured in your environment or configuration file.
-3.  **Network Awareness**: Confirm with the owner whether to use `bsc` (Mainnet) or `bscTestnet` (Testnet).
+## Commands
 
-## 🚀 Launch Agent Token
+```bash
+bitagent token info    <token> --json                          # curve state
+bitagent token quote   <token> --side buy  --amount 0.1 --json # price it first
+bitagent token quote   <token> --side sell --amount 1000 --json
+bitagent token buy     <token> --amount 0.1     -y --json      # --amount = RESERVE spent (UB/USD1/WBNB)
+bitagent token sell    <token> --amount 1000000 -y --json      # --amount = agent TOKENS sold
+bitagent token balance <token> --json
+bitagent token launch  --name "My Agent" --symbol MYAG --reserve UB -y --json
+```
 
-Use this command to deploy a new agent token on a bonding curve.
+- Reserve tokens: `UB`, `USD1`, `WBNB`.
+- `--slippage` is in hundredths of a percent (`50` = 0.5%), the contract's own scale.
+- `launch` registers the project record off-chain (gets `agentHash`), then deploys the exponential curve on-chain committing to that hash — one command, returns `{token, agentHash, transactionHash, url, network, chainId}`.
+- `info` returns `{token, name, symbol, creator, currentSupply, maxSupply, progress (0–1), priceForNextMint, reserveSymbol, reserveBalance, buyRoyaltyPercent, sellRoyaltyPercent, url}`.
+- Without `-y` the write commands prompt interactively, which most harnesses cannot answer — pass `-y` only after the owner confirmed.
 
--   **Command**: `npx tsx scripts/index.ts launch --network <network> --name "<name>" --symbol "<symbol>" --reserve-symbol "<reserve>"`
--   **Parameters**:
-    -   `--network`: `bsc` or `bscTestnet`.
-    -   `--name`: Full name of the agent/token.
-    -   `--symbol`: Token ticker (e.g., $AGENT).
-    -   `--reserve-symbol`: The asset to back the curve. Supported: `UB`, `WBNB`, `USD1`.
--   **Output**: Returns the newly deployed Contract Address and its BitAgent URL.
+## Execution protocol
 
-## 💰 Trading Tokens (Buy/Sell)
+1. **Fill in missing info** — "launch a token called AI" needs a symbol and a reserve before you run anything.
+2. **Quote first** — run `token quote` and show the owner the numbers.
+3. **Confirm** — "Buy on BSC Testnet: spend 0.1 UB on 0xABC…, min received X. Proceed?" Then run with `-y --json`.
+4. **Report** — surface `transactionHash` and the `url` from the JSON result.
 
-Interact with existing bonding curves by buying or selling tokens.
+## Errors
 
-### Buy Tokens
--   **Command**: `npx tsx scripts/index.ts buy --network <network> --token "<tokenAddress>" --amount "<amount>"`
--   **Parameters**:
-    -   `tokenAddress`: The contract address of the target token.
-    -   `amount`: The amount of reserve tokens to spend.
-
-### Sell Tokens
--   **Command**: `npx tsx scripts/index.ts sell --network <network> --token "<tokenAddress>" --amount "<amount>"`
--   **Parameters**:
-    -   `tokenAddress`: The contract address of the target token.
-    -   `amount`: The amount of agent tokens to sell.
-
-## 🛡️ Execution Protocol
-
-1.  **Pre-fill Missing Info**: If the user says "Launch a token called AI", you MUST ask for the Symbol and Reserve Symbol before running the command.
-2.  **Mandatory Confirmation**: Always show the owner the exact command you are about to run and ask for confirmation. 
-    - *Example*: "I am about to launch 'AI Agent' ($AIA) on BSC Testnet backed by WBNB. Proceed?"
-3.  **Capture Output**: Capture the CLI's `stdout` and present the hash or result clearly to the user.
+| Message | Fix |
+| --- | --- |
+| `This command signs on-chain transactions and needs a wallet private key.` | JWT-only credential; ask the owner for a key or stop |
+| `The bonding-curve launchpad is not available on <network>.` | Add `-n bscTestnet` or `-n bsc` |
+| `Could not find the creator for token 0x…` | Token is on the other BSC network; fix `-n` |

@@ -1,35 +1,34 @@
-# Authorization (Unibase Pay / Privy)
+# Authorisation (Unibase Pay JWT)
 
-The Terminal business flow requires an `Authorization` token (JWT) to interact with the Terminal Agent and manage AIP registration.
+The Terminal agent, agent registration and `job list` need a Unibase Pay JWT stored as `UNIBASE_PROXY_AUTH`. Getting one requires exactly one human click — everything else you do yourself.
 
-## Getting Authorization Token
+## Flow
 
-Authentication is handled via **Unibase Pay** (Privy custodial wallet). You must facilitate the following interactive flow to obtain the `UNIBASE_PROXY_AUTH` token for the owner.
+1. **Check** — `bitagent whoami --json`. If it succeeds, you are done. If it errors with `No credential found` or `authorization token has expired`, continue.
+2. **Fetch the auth URL**:
+   ```bash
+   curl -s -X POST https://api.pay.unibase.com/v1/init -H 'content-type: application/json' -d 'true'
+   # → {"code":"...","auth_url":"https://auth.pay.unibase.com?code=..."}
+   ```
+3. **Post `auth_url` to the owner as plain visible text**: "I need your authorisation to use BitAgent. Please approve here: <auth_url> and paste the token back to me." Then STOP and wait.
+4. **Store the token non-interactively**:
+   ```bash
+   bitagent configure --token "<jwt>"
+   ```
+5. **Verify** — `bitagent whoami --json` again. Do not run paid commands until this succeeds.
 
-### Flow: Interactive Authorization
+`bitagent configure` with no flags is interactive and cannot be driven by most harnesses — always use the `--token` / `--set-network` / `--private-key` flags.
 
-1.  **Initialize Login**: Call the initialization API internally:
-    ```bash
-    curl -X POST "https://api.pay.unibase.com/v1/init" --json "true"
-    ```
-    *Extract the `authUrl` from the response.*
+## Private key (only for token trades)
 
-2.  **Generate Auth Link**: Provide the user with the authorization link:
-    - **Message**: "I need your authorization to access the Terminal features. Please click here to approve: [authUrl]. Once you get the token, please paste it here."
+`token launch/buy/sell` sign on-chain transactions and need `UNIBASE_WALLET_PRIVATE_KEY`, not a JWT. If the owner volunteers one: `bitagent configure --private-key "0x…"`. Never ask for a key when a JWT will do; never echo a key back; the key never leaves the machine (address derived and messages signed locally).
 
-3.  **Persist Token**: Save the provided token as `UNIBASE_PROXY_AUTH`.
-    - All subsequent requests to AIP or Terminal APIs MUST include `Authorization: Bearer <UNIBASE_PROXY_AUTH>`.
+## Proxy-wallet signing (SDK / raw API use)
 
-## Wallet RPC Operations (Autonomous Signing)
+With a JWT, the Unibase Pay proxy wallet can sign for you without further owner interaction — this is how the Python SDK signs registration messages:
 
-Once authorized, the agent can use the proxy wallet to sign transactions or messages (e.g., for **AIP registration** or **Terminal activation**) without further user interaction. This is critical for the "autonomous activation" flow.
-
-- **Endpoint**: `POST https://api.pay.unibase.com/v1/wallets/me/rpc`
-- **Header**: `Authorization: Bearer <UNIBASE_PROXY_AUTH>`
-- **Body Example (personal_sign)**:
-  ```json
-  {
-    "method": "personal_sign",
-    "params": ["Create an AIP agent", "<wallet_address>"]
-  }
-  ```
+```
+POST https://api.pay.unibase.com/v1/wallets/me/rpc
+Authorization: Bearer <UNIBASE_PROXY_AUTH>
+{"method": "personal_sign", "params": ["<message>", "<wallet_address>"]}
+```
