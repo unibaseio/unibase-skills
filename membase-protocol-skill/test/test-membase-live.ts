@@ -3,13 +3,15 @@
  * Live test with real Membase credentials
  */
 
-import { MembaseClient } from "../src/membase-client.js";
-import { MemoryEncryption } from "../src/encryption.js";
-import type { MembaseMessage } from "../src/types.js";
+import { MembaseClient } from "../src/lib/membase-client.js";
+import { MemoryEncryption } from "../src/lib/encryption.js";
+import type { MembaseMessage } from "../src/lib/types.js";
 
-// Set environment variables
-process.env.MEMBASE_ACCOUNT = "0x5ea13664c5ce67753f208540d25b913788aa3daa";
-process.env.MEMBASE_SECRET_KEY = "c9e64785ef9c51c4e1d1c4f2cfbfa51c1117e5cffcecc2b631d38b16287c9bc4";
+// Credentials come from the environment; never commit them.
+if (!process.env.MEMBASE_ACCOUNT || !process.env.MEMBASE_SECRET_KEY) {
+	console.log("skip: set MEMBASE_ACCOUNT and MEMBASE_SECRET_KEY to run the live hub test");
+	process.exit(0);
+}
 
 console.log("🧪 Testing Membase Hub with Real Credentials\n");
 console.log("Account:", process.env.MEMBASE_ACCOUNT);
