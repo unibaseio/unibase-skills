@@ -1,0 +1,11 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "name": "io.membase.app/membase",
+  "description": "Membase: a person's long-term memory, lent to their AIs. Search it, read the user's profile, add facts and documents — over the account's own consent or a developer key.",
+  "version": "1.0.0",
+  "websiteUrl": "https://app.membase.io",
+  "repository": { "url": "https://github.com/unibaseio/unibase-skills", "source": "github" },
+  "remotes": [
+    { "type": "streamable-http", "url": "https://api.app.membase.io/mcp-http" }
+  ]
+}

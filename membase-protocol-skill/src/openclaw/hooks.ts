@@ -11,7 +11,7 @@ import type { MembaseConfig } from '../lib/types.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const MEMBASE_SKILL = join(__dirname, '../../skills/membase/membase.ts');
+const MEMBASE_SKILL = join(__dirname, '../../skills/membase-protocol/membase.ts');
 
 export function createMembaseHooks(config: MembaseConfig) {
   let lastBackupTime = 0;

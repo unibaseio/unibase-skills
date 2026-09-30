@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "membase": {
+      "type": "http",
+      "url": "https://api.app.membase.io/mcp-http"
+    }
+  }
+}

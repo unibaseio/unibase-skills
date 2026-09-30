@@ -14,9 +14,9 @@
 
 1. Get BNB on [BNBChain Testnet](https://www.bnbchain.org/en/testnet-faucet) for `MEMBASE_ACCOUNT`
 2. Set all three `MEMBASE_*` variables before running agents
-3. AIP reuses the Membase account system — same config as membase-skill
+3. AIP reuses the Membase account system — same config as membase-protocol-skill
 
 ## Shared with Other Skills
 
-- **membase-skill**: Uses same `MEMBASE_ACCOUNT`, `MEMBASE_SECRET_KEY`
+- **membase-protocol-skill**: Uses same `MEMBASE_ACCOUNT`, `MEMBASE_SECRET_KEY`
 - **unibase-pay-skill**: Can provide wallet address for BNB; use for payments when invoking agents

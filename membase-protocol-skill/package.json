@@ -6,7 +6,7 @@
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"bin": {
-		"membase": "skills/membase/membase.ts"
+		"membase": "skills/membase-protocol/membase.ts"
 	},
 	"files": [
 		"dist",
@@ -24,7 +24,7 @@
 	},
 	"scripts": {
 		"build": "tsc && npm run link-lib",
-		"link-lib": "cd skills/membase && rm -f lib && ln -sf ../../dist/lib lib",
+		"link-lib": "cd skills/membase-protocol && rm -f lib && ln -sf ../../dist/lib lib",
 		"dev": "tsc --watch",
 		"prepublishOnly": "npm run build"
 	},

@@ -12,7 +12,7 @@ import { dirname, join } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const MEMBASE_SKILL = join(__dirname, '../../skills/membase/membase.ts');
+const MEMBASE_SKILL = join(__dirname, '../../skills/membase-protocol/membase.ts');
 
 export function registerMembaseCli() {
   return ({ program }: { program: Command }) => {

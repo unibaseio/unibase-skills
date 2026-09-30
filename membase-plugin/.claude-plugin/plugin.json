@@ -1,0 +1,16 @@
+{
+  "name": "membase",
+  "description": "Membase: a person's long-term memory, lent to their AIs. The membase skill (the agent protocol: search, profile, add, documents) plus the Membase MCP server, authorized with OAuth on first use.",
+  "version": "1.0.0",
+  "author": { "name": "Unibase", "url": "https://app.membase.io" },
+  "homepage": "https://app.membase.io",
+  "repository": "https://github.com/unibaseio/unibase-skills",
+  "license": "Apache-2.0",
+  "keywords": ["memory", "mcp", "personalization", "agent-memory", "membase"],
+  "mcpServers": {
+    "membase": {
+      "type": "http",
+      "url": "https://api.app.membase.io/mcp-http"
+    }
+  }
+}

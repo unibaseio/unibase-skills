@@ -13,7 +13,7 @@ Encrypted memory backup and restore for AI agents using Membase decentralized st
 
 ## 1. AgentSkills
 
-AI agents auto-discover and use this skill by reading [skills/membase/SKILL.md](skills/membase/SKILL.md).
+AI agents auto-discover and use this skill by reading [skills/membase-protocol/SKILL.md](skills/membase-protocol/SKILL.md).
 
 **Setup:**
 ```bash
@@ -24,7 +24,7 @@ export MEMBASE_BACKUP_PASSWORD=your-backup-password
 
 **Commands:**
 ```bash
-cd skills/membase
+cd skills/membase-protocol
 node membase.ts backup [--incremental]
 node membase.ts restore <backup-id>
 node membase.ts list
@@ -33,7 +33,7 @@ node membase.ts status
 node membase.ts cleanup [--keep-last <n>]
 ```
 
-See [SKILL.md](skills/membase/SKILL.md) for complete instructions.
+See [SKILL.md](skills/membase-protocol/SKILL.md) for complete instructions.
 
 ---
 

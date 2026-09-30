@@ -1,6 +1,6 @@
 ---
-name: membase
-description: Manage agent memory with Membase - a decentralized, encrypted memory backup and restore system. Provides backup, restore, list, diff, status, and cleanup operations for agent memories.
+name: membase-protocol
+description: Manage agent memory with Membase Protocol - a decentralized, encrypted memory backup and restore system. Provides backup, restore, list, diff, status, and cleanup operations for agent memories.
 license: MIT
 metadata:
   author: Unibase
@@ -27,7 +27,7 @@ Activate this skill when the user:
 
 ## Overview
 
-All Membase operations go through a single command. Run from the skill install directory (e.g. `membase-skill/skills/membase`):
+All Membase operations go through a single command. Run from the skill install directory (e.g. `membase-protocol-skill/skills/membase-protocol`):
 
 ```bash
 # Option 1: OpenClaw (if plugin installed)
@@ -101,7 +101,7 @@ You should:
 
 3. Run backup (from skill directory):
    ```bash
-   cd skills/membase
+   cd skills/membase-protocol
    npx tsx membase.ts backup --password "<password>"
    ```
 
@@ -146,7 +146,7 @@ You should:
 
 2. Run restore:
    ```bash
-   cd skills/membase
+   cd skills/membase-protocol
    npx tsx membase.ts restore backup-2026-02-02T10-30-45-123Z --password "<password>"
    ```
 
@@ -176,7 +176,7 @@ User: "Show me my backups" or "List my backups"
 
 You should:
 ```bash
-cd skills/membase
+cd skills/membase-protocol
 npx tsx membase.ts list
 ```
 
@@ -212,7 +212,7 @@ User: "What changed between my last two backups?"
 You should:
 1. Get the two most recent backup IDs:
    ```bash
-   cd skills/membase
+   cd skills/membase-protocol
    npx tsx membase.ts list
    ```
 
@@ -249,7 +249,7 @@ User: "What's my backup status?" or "Check backup status"
 
 You should:
 ```bash
-cd skills/membase
+cd skills/membase-protocol
 npx tsx membase.ts status
 ```
 
@@ -290,7 +290,7 @@ User: "Clean up old backups, keep the last 5"
 
 You should:
 ```bash
-cd skills/membase
+cd skills/membase-protocol
 npx tsx membase.ts cleanup --keep-last 5
 ```
 
@@ -378,16 +378,16 @@ npx tsx membase.ts restore backup-id-1 --password "MySecure123Pass"
 ## Troubleshooting
 
 ### Command not found
-Make sure you're in the skills/membase directory:
+Make sure you're in the skills/membase-protocol directory:
 ```bash
-cd skills/membase
-pwd  # Should show .../skills/membase
+cd skills/membase-protocol
+pwd  # Should show .../skills/membase-protocol
 ```
 
 ### Module not found
 The lib folder needs to be linked to compiled source:
 ```bash
-cd skills/membase
+cd skills/membase-protocol
 ln -sf ../../dist/lib lib
 ```
 

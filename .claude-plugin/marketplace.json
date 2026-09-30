@@ -1,0 +1,16 @@
+{
+  "name": "unibaseio",
+  "owner": {
+    "name": "Unibase",
+    "url": "https://app.membase.io"
+  },
+  "description": "Unibase agent skills and plugins: Membase memory, Membase Protocol backup, AIP, BitAgent and Unibase Pay.",
+  "plugins": [
+    {
+      "name": "membase",
+      "source": "./membase-plugin",
+      "description": "Membase: a person's long-term memory, lent to their AIs — the membase skill plus the Membase MCP server.",
+      "version": "1.0.0"
+    }
+  ]
+}

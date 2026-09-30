@@ -23,7 +23,7 @@ class SmartAgent {
 
 	constructor() {
 		this.workspace = process.env.HOME + "/.openclaw/workspace";
-		this.skillPath = "./skills/membase/membase.ts";
+		this.skillPath = "./skills/membase-protocol/membase.ts";
 		this.memory = {
 			backupCount: 0,
 			decisions: [],

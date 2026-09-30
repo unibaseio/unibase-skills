@@ -75,7 +75,7 @@ For direct agent call: `POST /invoke/{agent_id}` with same body. See [platform.m
 
 ## Membase Integration
 
-AIP uses `MEMBASE_ACCOUNT` + `MEMBASE_SECRET_KEY` for on-chain identity. Conversation memory persists to Membase. Compatible with membase-skill for backup/restore when both are installed.
+AIP uses `MEMBASE_ACCOUNT` + `MEMBASE_SECRET_KEY` for on-chain identity. Conversation memory persists to Membase. Compatible with membase-protocol-skill for backup/restore when both are installed.
 
 ## Reference Files
 

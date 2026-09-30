@@ -13,7 +13,7 @@ const sleep = promisify(setTimeout);
 const AGENT_CONFIG = {
 	name: "TestAgent",
 	workspace: process.env.HOME + "/.openclaw/workspace",
-	skillPath: "./skills/membase/membase.ts",
+	skillPath: "./skills/membase-protocol/membase.ts",
 };
 
 console.log("🤖 Standalone Agent starting");
