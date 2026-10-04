@@ -2,12 +2,12 @@
 
 The SDKs are thin clients over the REST namespace (`api-reference.md`): one client, one
 developer key, the user's memory. The reach and confirmation rules live server-side and cannot
-be bypassed from code. Source: `sdk/python` and `sdk/typescript` in the product repository.
+be bypassed from code. Source: [unibaseio/membase-ai](https://github.com/unibaseio/membase-ai).
 
-## Python — `membase-sdk`
+## Python — `membase-ai`
 
 ```bash
-pip install membase-sdk
+pip install membase-ai
 export MEMBASE_API_KEY="mbk_…"        # Connect › Developer keys
 ```
 
@@ -38,14 +38,14 @@ all with `.code`, `.message`, `.details`, `.retryable`, `.trace_id`. 429 and 5xx
 twice with backoff (`max_retries=`); the default timeout is 90 s (`timeout=`), because the first
 search after a quiet spell waits for the memory to wake.
 
-## TypeScript — `membase-sdk`
+## TypeScript — `membase-ai`
 
 ```bash
-npm install membase-sdk
+npm install membase-ai
 ```
 
 ```ts
-import { Membase, PermissionDeniedError } from "membase-sdk";
+import { Membase, PermissionDeniedError } from "membase-ai";
 
 const client = new Membase();                       // or { apiKey, baseUrl, timeoutMs, maxRetries }
 
