@@ -58,7 +58,7 @@ Available commands:
 export MEMBASE_ACCOUNT=your-account-address
 export MEMBASE_SECRET_KEY=your-secret-key
 export MEMBASE_BACKUP_PASSWORD=your-backup-password
-export MEMBASE_ENDPOINT=https://testnet.hub.membase.io
+export MEMBASE_ENDPOINT=https://testnet.hub.membase.com
 ```
 
 Check if configured:
@@ -265,7 +265,7 @@ Remote:
   Backups: 10
 
 Configuration:
-  Endpoint: https://testnet.hub.membase.io
+  Endpoint: https://testnet.hub.membase.com
   Agent: my-agent
   Workspace: ~/.openclaw/workspace
 ```
