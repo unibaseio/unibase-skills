@@ -26,7 +26,7 @@ membase-skill/
 
 | Official Content | This Skill | Gap |
 |------------------|------------|-----|
-| **Hub URL** | testnet.hub.membase.io | Official mainnet: hub.membase.unibase.com |
+| **Hub URL** | testnet.hub.membase.com | Official mainnet: hub.membase.unibase.com |
 | **Integration** | Skill ✅ | Official lists: SDK, MCP, Skill |
 | **Quick Start** | None | Official has Python 5-minute example |
 | **MEMBASE_ID** | Not used | Official Python SDK uses MEMBASE_ID |
@@ -96,7 +96,7 @@ membase-skill/
 | MEMBASE_ACCOUNT | BNB address | Required |
 | MEMBASE_SECRET_KEY | Signing key | Required |
 | MEMBASE_BACKUP_PASSWORD | Backup encryption password | Required (for backup/restore) |
-| MEMBASE_ENDPOINT | Hub URL | testnet.hub.membase.io |
+| MEMBASE_ENDPOINT | Hub URL | testnet.hub.membase.com |
 
 Note: Mainnet Hub is `https://hub.membase.unibase.com`; clarify relationship with testnet.
 
